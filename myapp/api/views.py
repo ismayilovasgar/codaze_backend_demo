@@ -23,31 +23,31 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-# api/profile  and api/profile/update
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def getProfile(request):
-    user = request.user
-    serializer = ProfileSerializer(user, many=False)
-    return Response(serializer.data)
+# # api/profile  and api/profile/update
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def getProfile(request):
+#     user = request.user
+#     serializer = ProfileSerializer(user, many=False)
+#     return Response(serializer.data)
 
 
-@api_view(["PUT"])
-@permission_classes([IsAuthenticated])
-def updateProfile(request):
-    user = request.user
-    serializer = ProfileSerializer(user, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
+# @api_view(["PUT"])
+# @permission_classes([IsAuthenticated])
+# def updateProfile(request):
+#     user = request.user
+#     serializer = ProfileSerializer(user, data=request.data, partial=True)
+#     if serializer.is_valid():
+#         serializer.save()
+#     return Response(serializer.data)
 
 
-# api/notes
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def getNotes(request):
-    public_notes = Note.objects.filter(is_public=True).order_by("-updated")[:10]
-    user_notes = request.user.notes.all().order_by("-updated")[:10]
-    notes = public_notes | user_notes
-    serializer = NoteSerializer(notes, many=True)
-    return Response(serializer.data)
+# # api/notes
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def getNotes(request):
+#     public_notes = Note.objects.filter(is_public=True).order_by("-updated")[:10]
+#     user_notes = request.user.notes.all().order_by("-updated")[:10]
+#     notes = public_notes | user_notes
+#     serializer = NoteSerializer(notes, many=True)
+#     return Response(serializer.data)
