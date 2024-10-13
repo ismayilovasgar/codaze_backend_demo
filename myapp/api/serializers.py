@@ -46,12 +46,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True, required=True, validators=[validate_password]
     )
     password2 = serializers.CharField(write_only=True, required=True)
-    cover_photo = serializers.ImageField(
-        validators=[
-            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"]),
-        ],
-        required=False,
-    )
+    # cover_photo = serializers.ImageField(
+    #     validators=[
+    #         FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"]),
+    #     ],
+    #     required=False,
+    # )
 
     class Meta:
         model = CustomUser

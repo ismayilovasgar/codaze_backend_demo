@@ -12,11 +12,13 @@ urlpatterns = [
     path("token/", views.MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("register/", views.RegisterView.as_view(), name="auth_register"),
+    path('logout/', views.LogoutView.as_view(), name='auth_logout'),
+    path("", note_views.getRoutes),
 
     # Profile
     path("profile/", note_views.getProfile, name="profile"),
     path("profile/update/", note_views.updateProfile, name="update-profile"),
-    
+
     # Notes
     path("notes/", note_views.getNotes, name="notes"),
     path("notes/<int:pk>/", note_views.getNote, name="note"),
