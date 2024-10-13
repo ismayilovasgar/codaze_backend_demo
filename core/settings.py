@@ -38,14 +38,39 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    ## <== My App ==>
-    "rest_framework",
-    "rest_framework_simplejwt.token_blacklist",
+    # My App
     "myapp",
+    ## <== My App JWT ==>
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+    # % <== Social Login ==>
+    "django.contrib.sites",  # Zorunlu
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.facebook",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
 
+# % <== Social Login ==>
+SITE_ID = 1
 
-## <== REST framework settings ==>
+# % <== Social Login ==>
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+# % <== Social Login ==>
+# REST_USE_JWT = True  # İsteğe bağlı
+# ACCOUNT_EMAIL_VERIFICATION = "none"  # Email doğrulama isterseniz "mandatory" yapabilirsiniz
+# ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+# ACCOUNT_EMAIL_REQUIRED = True
+
+## <== My App JWT==>
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -53,7 +78,7 @@ REST_FRAMEWORK = {
 }
 
 
-## <== setup the JWT ==>
+## <== My App JWT ==>
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
