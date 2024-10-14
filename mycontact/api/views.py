@@ -4,7 +4,8 @@ from rest_framework import status
 from ..models import Contact
 from .serializers import ContactSerializer
 
-@api_view(['POST'])
+
+@api_view(["POST"])
 def create_contact(request):
     serializer = ContactSerializer(data=request.data)
     if serializer.is_valid():
@@ -13,13 +14,7 @@ def create_contact(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def reset_contact_form(request):
-    empty_form = {
-        "name": "",
-        "surname": "",
-        "email": "",
-        "title": "",
-        "content": ""
-    }
+    empty_form = {"name": "", "surname": "", "email": "", "title": "", "content": ""}
     return Response(empty_form, status=status.HTTP_200_OK)

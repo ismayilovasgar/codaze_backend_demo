@@ -5,9 +5,19 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 import re
+from django.conf import settings
 
 
 class CustomUser(AbstractUser):
+    AREA_OF_USE_CHOICES = [
+        ("mekteb", "mekteb"),
+        ("universitet", "universitet"),
+        ("sənədlər", "sənədlər"),
+        ("blog", "blog"),
+        ("tərcümə", "tərcümə"),
+        ("marketinq", "marketinq"),
+    ]
+
     # Yeni eklenen özel  validator-lar
     phone_regex = RegexValidator(
         # regex=r"^\+?1?\d{9,15}$",
@@ -32,11 +42,11 @@ class CustomUser(AbstractUser):
     #         raise ValidationError(_('Şifre, kullanıcı adı veya e-posta ile çok benzer olmamalıdır.'))
 
     # Varsayılan User alanları
-    id = models.BigAutoField(primary_key=True)  # Otomatik birincil anahtar.
-    username = models.CharField(max_length=150, unique=True)  # Kullanıcı adı.
-    first_name = models.CharField(max_length=150, blank=True)  # İsim.
-    last_name = models.CharField(max_length=150, blank=True)  # Soyisim.
-    email = models.EmailField(blank=True, unique=True)  # E-posta adresi.
+    id = models.BigAutoField(primary_key=True)
+    username = models.CharField(max_length=150, unique=True)
+    first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
+    email = models.EmailField(blank=True, unique=True)
     password = models.CharField(
         max_length=128, validators=[strong_password_validator]
     )  # Şifre (hash'lenmiş).
@@ -51,6 +61,9 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
         unique=True,
+    )
+    area_of_use = models.CharField(
+        max_length=20, choices=AREA_OF_USE_CHOICES, default="retail"
     )
 
     # Şifreyi set ederken hash'lemek için
@@ -80,3 +93,18 @@ class CustomUser(AbstractUser):
     #     help_text="Specific permissions for this user.",
     #     verbose_name="user permissions",
     # )
+
+
+#! <== Words Model ==>
+class Word(models.Model):
+    text = models.CharField(max_length=255)  # The text of the word
+    deleted = models.BooleanField(default=True)  # Flag to mark it as deleted
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )  # Link to the user who deleted it
+    deleted_at = models.DateTimeField(
+        auto_now_add=True
+    )  # Timestamp when the word was deleted
+
+    def __str__(self):
+        return self.text
