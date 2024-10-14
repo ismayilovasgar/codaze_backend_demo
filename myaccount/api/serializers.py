@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers  # Import the serializer class
-from ..models import Note  # Import the Note model
+# from ..models import Note  # Import the Note model
 from ..models import CustomUser
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
@@ -9,18 +9,18 @@ from django.core.validators import FileExtensionValidator
 
 # Create a serializer class
 # This class will convert the Note model into JSON
-class NoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Note
-        fields = "__all__"
+# class NoteSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Note
+#         fields = "__all__"
 
-    def create(self, validated_data):
-        validated_data["user"] = self.context["request"].user
-        return super().create(validated_data)
+#     def create(self, validated_data):
+#         validated_data["user"] = self.context["request"].user
+#         return super().create(validated_data)
 
-    def update(self, instance, validated_data):
-        validated_data["user"] = self.context["request"].user
-        return super().update(instance, validated_data)
+#     def update(self, instance, validated_data):
+#         validated_data["user"] = self.context["request"].user
+#         return super().update(instance, validated_data)
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -79,18 +79,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    notes = NoteSerializer(many=True, read_only=True)
+# class ProfileSerializer(serializers.ModelSerializer):
+#     notes = NoteSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = CustomUser
-        fields = "__all__"
+#     class Meta:
+#         model = CustomUser
+#         fields = "__all__"
 
-    def to_internal_value(self, data):
-        cleaned_data = {}
-        for key, value in data.items():
-            if isinstance(value, bytes):
-                cleaned_data[key] = value.decode("utf-8", errors="replace")
-            else:
-                cleaned_data[key] = value
-        return super().to_internal_value(cleaned_data)
+#     def to_internal_value(self, data):
+#         cleaned_data = {}
+#         for key, value in data.items():
+#             if isinstance(value, bytes):
+#                 cleaned_data[key] = value.decode("utf-8", errors="replace")
+#             else:
+#                 cleaned_data[key] = value
+#         return super().to_internal_value(cleaned_data)
+
+

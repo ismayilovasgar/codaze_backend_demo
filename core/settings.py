@@ -38,15 +38,20 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # My App
+    "myaccount",
+    "mycontact",
     "myapp",
     "django_extensions",
+    
     ## <== My App JWT ==>
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+
     # % <== Social Login ==>
-    "django.contrib.sites",  # Zorunlu
+    "django.contrib.sites", 
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -169,7 +174,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "core.wsgi.application"
-AUTH_USER_MODEL = "myapp.CustomUser"
+AUTH_USER_MODEL = "myaccount.CustomUser"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
