@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # My App
     "myapp",
+    "django_extensions",
     ## <== My App JWT ==>
     "rest_framework",
     "rest_framework_simplejwt",
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.facebook",
     "dj_rest_auth",
     "dj_rest_auth.registration",
+    "rest_framework.authtoken",
 ]
 
 # % <== Social Login ==>
@@ -64,11 +66,42 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+
+# % <== Social Login ==>
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+    # "linkedin_oauth2": {
+    #     "SCOPE": ["r_liteprofile", "r_emailaddress"],
+    #     "PROFILE_FIELDS": [
+    #         "id",
+    #         "first-name",
+    #         "last-name",
+    #         "email-address",
+    #         "picture-url",
+    #     ],
+    # },
+}
+# % <== Social Login ==>
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_LOGOUT_ON_GET = True
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+
 # % <== Social Login ==>
 # REST_USE_JWT = True  # İsteğe bağlı
 # ACCOUNT_EMAIL_VERIFICATION = "none"  # Email doğrulama isterseniz "mandatory" yapabilirsiniz
 # ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 # ACCOUNT_EMAIL_REQUIRED = True
+
 
 ## <== My App JWT==>
 REST_FRAMEWORK = {
@@ -113,6 +146,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # % <== Social Login ==>
+    "allauth.account.middleware.AccountMiddleware",  # Buraya ekleyin
 ]
 
 ROOT_URLCONF = "core.urls"

@@ -1,0 +1,9 @@
+
+https://accounts.google.com/o/oauth2/auth?client_id=799105410517-70e3t7oat6m4bcve6f1v0vhkadp2ji3l.apps.googleusercontent.com&redirect_uri=http://localhost&response_type=code&scope=https://www.googleapis.com/auth/drive&access_type=offline
+
+https://accounts.google.com/o/oauth2/auth?
+client_id=799105410517-70e3t7oat6m4bcve6f1v0vhkadp2ji3l.apps.googleusercontent.com&
+redirect_uri=http://localhost&
+response_type=code&
+scope=https://www.googleapis.com/auth/drive&
+access_type=offline
