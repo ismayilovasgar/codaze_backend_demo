@@ -38,20 +38,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # My App
     "myaccount",
     "mycontact",
     "myapp",
     "django_extensions",
-    
+
     ## <== My App JWT ==>
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
 
     # % <== Social Login ==>
-    "django.contrib.sites", 
+    "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -101,12 +100,22 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 
-# % <== Social Login ==>
-# REST_USE_JWT = True  # İsteğe bağlı
-# ACCOUNT_EMAIL_VERIFICATION = "none"  # Email doğrulama isterseniz "mandatory" yapabilirsiniz
-# ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-# ACCOUNT_EMAIL_REQUIRED = True
+# % <== Social Authentication /Register ==>
+REST_USE_JWT = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # Güvenlik için e-posta doğrulaması
+# ACCOUNT_AUTHENTICATION_METHOD = "username_email"  # Kullanıcı adı veya e-posta ile giriş
+# ACCOUNT_EMAIL_REQUIRED = True  # E-posta girmek zorunlu
 
+# % <== Social API Keys ==>
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ("60263067117-b1d5a6k7lb5aoplbura4vrog9hmeabma.apps.googleusercontent.com")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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t"
+
+SOCIAL_AUTH_FACEBOOK_KEY = "1055318885807101"
+SOCIAL_AUTH_FACEBOOK_SECRET = "6ca8584176a4f03cc7571d3c186c3e23"
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = "86ei7md1utizkz"
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = "WPL_AP1.dXWJkyGUEWwWUENo.q8WtWw=="
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ["r_liteprofile", "r_emailaddress"]
 
 ## <== My App JWT==>
 REST_FRAMEWORK = {
@@ -123,7 +132,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
-    "ALGORITHM": "HS256",
+    "ALGORITHM": "HS256", 
     "VERIFYING_KEY": None,
     "AUDIENCE": None,
     "ISSUER": None,
@@ -152,7 +161,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # % <== Social Login ==>
-    "allauth.account.middleware.AccountMiddleware",  # Buraya ekleyin
+    "allauth.account.middleware.AccountMiddleware",  
 ]
 
 ROOT_URLCONF = "core.urls"

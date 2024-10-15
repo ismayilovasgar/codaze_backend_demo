@@ -10,9 +10,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework import status
+from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import RefreshToken
 
-
-# Create your views here.
 # Login User
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -42,31 +46,39 @@ class LogoutView(APIView):
             return Response({"error": str(e)}, status=400)
 
 
-# # api/profile  and api/profile/update
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
-# def getProfile(request):
-#     user = request.user
-#     serializer = ProfileSerializer(user, many=False)
-#     return Response(serializer.data)
+# class RegisterView(APIView):
+#     User = get_user_model()
+#     permission_classes = [AllowAny]
 
+#     def post(self, request):
+#         username = request.data.get("username")
+#         password = request.data.get("password")
+#         email = request.data.get("email")
 
-# @api_view(["PUT"])
-# @permission_classes([IsAuthenticated])
-# def updateProfile(request):
-#     user = request.user
-#     serializer = ProfileSerializer(user, data=request.data, partial=True)
-#     if serializer.is_valid():
-#         serializer.save()
-#     return Response(serializer.data)
+#         # Kullanıcı oluştur
+#         if User.objects.filter(username=username).exists():
+#             return Response({"detail": "Bu kullanıcı adı zaten alınmış."}, status=400)
 
+#         user = User.objects.create_user(
+#             username=username, password=password, email=email
+#         )
 
-# # api/notes
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
-# def getNotes(request):
-#     public_notes = Note.objects.filter(is_public=True).order_by("-updated")[:10]
-#     user_notes = request.user.notes.all().order_by("-updated")[:10]
-#     notes = public_notes | user_notes
-#     serializer = NoteSerializer(notes, many=True)
-#     return Response(serializer.data)
+#         # JWT Token oluştur
+#         refresh = RefreshToken.for_user(user)
+#         access_token = str(refresh.access_token)
+#         refresh_token = str(refresh)
+
+#         # Token'ları veritabanına kaydet
+#         Token.objects.create(
+#             user=user, access_token=access_token, refresh_token=refresh_token
+#         )
+
+#         return Response(
+#             {
+#                 "username": user.username,
+#                 "email": user.email,
+#                 "access": access_token,
+#                 "refresh": refresh_token,
+#             },
+#             status=status.HTTP_201_CREATED,
+#         )

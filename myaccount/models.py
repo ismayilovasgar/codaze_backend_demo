@@ -10,17 +10,17 @@ from django.conf import settings
 
 class CustomUser(AbstractUser):
     AREA_OF_USE_CHOICES = [
-        ("mekteb", "mekteb"),
-        ("universitet", "universitet"),
-        ("sənədlər", "sənədlər"),
-        ("blog", "blog"),
-        ("tərcümə", "tərcümə"),
-        ("marketinq", "marketinq"),
+        ("school", "Məktəb"),
+        ("university", "Universitet"),
+        ("documentary", "Sənədlər"),
+        ("blog", "Blog"),
+        ("translate", "Tərcümə"),
+        ("marketinq", "Marketinq"),
     ]
 
     # Yeni eklenen özel  validator-lar
     phone_regex = RegexValidator(
-        # regex=r"^\+?1?\d{9,15}$",
+        # ! +994 Elave olunsun anacaq arastirma et !
         regex=r"^\+?[0-9]{9,20}$",
         message="Telefon numarası '+999999999' formatında olmalıdır. En fazla 20 basamak olabilir.",
     )
@@ -41,7 +41,6 @@ class CustomUser(AbstractUser):
     #     if user.username.lower() in password.lower() or user.email.split('@')[0].lower() in password.lower():
     #         raise ValidationError(_('Şifre, kullanıcı adı veya e-posta ile çok benzer olmamalıdır.'))
 
-    # Varsayılan User alanları
     id = models.BigAutoField(primary_key=True)
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=True)
@@ -63,12 +62,17 @@ class CustomUser(AbstractUser):
         unique=True,
     )
     area_of_use = models.CharField(
-        max_length=20, choices=AREA_OF_USE_CHOICES, default="retail"
+        max_length=20,
+        choices=AREA_OF_USE_CHOICES,
+        default="mekteb",
+        null=True,
+        blank=True,
     )
 
     # Şifreyi set ederken hash'lemek için
-    def set_password(self, raw_password):
-        super().set_password(raw_password)
+    # def set_password(self, raw_password):
+    #     self.strong_password_validator(raw_password)
+    #     super().set_password(raw_password)
 
     # def set_password(self, raw_password):
     #     user_attribute_similarity_validator(raw_password, self)
@@ -108,3 +112,15 @@ class Word(models.Model):
 
     def __str__(self):
         return self.text
+
+
+# class Token(models.Model):
+#     user = models.ForeignKey(
+#         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="tokens"
+#     )
+#     access_token = models.TextField()
+#     refresh_token = models.TextField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"Token for {self.user.username}"

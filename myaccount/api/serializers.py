@@ -22,7 +22,6 @@ from django.core.validators import FileExtensionValidator
 #         validated_data["user"] = self.context["request"].user
 #         return super().update(instance, validated_data)
 
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     # username = serializers.CharField(required=True)
@@ -55,7 +54,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "password", "password2", "bio", "cover_photo")
+        fields = ("username", "email", "password", "password2",)
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password2"]:
@@ -69,8 +68,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create(
             username=validated_data["username"],
             email=validated_data["email"],
-            bio=validated_data["bio"],
-            cover_photo=validated_data["cover_photo"],
         )
 
         user.set_password(validated_data["password"])
