@@ -29,6 +29,9 @@ urlpatterns = [
     #
     path("api/contacts/", include("mycontact.api.urls")),
     #
-    path("api/auth/", include("social_auth.urls")),
+    path("auth/", include("dj_rest_auth.urls")),  # Standart auth
+    path('auth/', include('social_django.urls', namespace='social')),
+    path("auth/registration/", include("dj_rest_auth.registration.urls")),  # Kayıt işlemleri
+    path("accounts/", include("allauth.urls")),  # Sosyal giriş işlemleri
     #
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -14,9 +14,9 @@ from .views import (
 
 urlpatterns = [
     # Social Login Account / Foreget Password
-    path("auth/google/", GoogleLoginView.as_view(), name="google_login"),
-    path("auth/facebook/", FacebookLoginView.as_view(), name="facebook_login"),
-    path("auth/linkedin/", LinkedinLoginView.as_view(), name="linkedin_login"),
-    path("auth/reset-password/", ResetPasswordView.as_view(), name="reset_password"),
+    path("google/", GoogleLoginView.as_view(), name="google_login"),
+    path("facebook/", FacebookLoginView.as_view(), name="facebook_login"),
+    path("linkedin/", LinkedinLoginView.as_view(), name="linkedin_login"),
+    path("reset-password/", ResetPasswordView.as_view(), name="reset_password"),
     #
 ]

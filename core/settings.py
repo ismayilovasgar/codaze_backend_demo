@@ -43,22 +43,20 @@ INSTALLED_APPS = [
     "mycontact",
     "myapp",
     "django_extensions",
-
     ## <== My App JWT ==>
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-    
-    # % <== Social Login ==>
-    "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
-    "allauth.socialaccount.providers.facebook",
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "rest_framework.authtoken",
+    # % <== Social Login ==>
+    'django.contrib.sites',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",  # Google
+    "allauth.socialaccount.providers.facebook",  # Facebook
     "social_django",
 ]
 
@@ -69,39 +67,56 @@ SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
     "social_core.backends.facebook.FacebookOAuth2",
-    "social_core.backends.linkedin.LinkedinOAuth2",
-    "django.contrib.auth.backends.ModelBackend",
+    "social_core.backends.linkedin.LinkedinOAuth2",  # LinkedIn
+    "django.contrib.auth.backends.ModelBackend",  # Varsayılan
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 
 # % <== Social Login ==>
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-    },
-    # "linkedin_oauth2": {
-    #     "SCOPE": ["r_liteprofile", "r_emailaddress"],
-    #     "PROFILE_FIELDS": [
-    #         "id",
-    #         "first-name",
-    #         "last-name",
-    #         "email-address",
-    #         "picture-url",
-    #     ],
-    # },
-}
+# Sağlayıcıların OAuth ayarları
+# SOCIALACCOUNT_PROVIDERS = {
+#     "google": {
+#         "APP": {
+#             "client_id": "GOOGLE_CLIENT_ID",  # Google Client ID
+#             "secret": "GOOGLE_SECRET",  # Google Client Secret
+#         },
+#         "SCOPE": ["profile", "email"],  # Alınacak izinler
+#         "AUTH_PARAMS": {
+#             "access_type": "online",  # Erişim türü
+#         },
+#     },
+#     "facebook": {
+#         "APP": {
+#             "client_id": "FACEBOOK_CLIENT_ID",  # Facebook Client ID
+#             "secret": "FACEBOOK_SECRET",  # Facebook Client Secret
+#         },
+#         "METHOD": "oauth2",
+#         "SCOPE": ["email", "public_profile"],  # Alınacak izinler
+#     },
+#     "linkedin": {
+#         "APP": {
+#             "client_id": "LINKEDIN_CLIENT_ID",  # LinkedIn Client ID
+#             "secret": "LINKEDIN_SECRET",  # LinkedIn Client Secret
+#         },
+#         "SCOPE": ["r_liteprofile", "r_emailaddress"],  # Alınacak izinler
+#         "METHOD": "oauth2",
+#     },
+# }
+
 # % <== Social Login ==>
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_LOGOUT_ON_GET = True
+
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Diğer ayarlar
+# LOGIN_REDIRECT_URL = '/api/auth/login/'
+# LOGOUT_REDIRECT_URL = '/api/auth/logout/'
+
+# LOGIN_URL = "/api/auth/login/"
+# LOGOUT_URL = "/api/auth/logout/"
 
 
 # % <== Social Authentication /Register ==>
@@ -110,14 +125,14 @@ REST_USE_JWT = True
 # ACCOUNT_AUTHENTICATION_METHOD = "username_email"  # Kullanıcı adı veya e-posta ile giriş
 # ACCOUNT_EMAIL_REQUIRED = True  # E-posta girmek zorunlu
 
-# % <== Social API Keys ==>
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
-    "60263067117-b1d5a6k7lb5aoplbura4vrog9hmeabma.apps.googleusercontent.com"
-)
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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t"
+# % <== Social_Auth API Keys ==>
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
+#     "60263067117-b1d5a6k7lb5aoplbura4vrog9hmeabma.apps.googleusercontent.com"
+# )
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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t"
 
-SOCIAL_AUTH_FACEBOOK_KEY = "1055318885807101"
-SOCIAL_AUTH_FACEBOOK_SECRET = "6ca8584176a4f03cc7571d3c186c3e23"
+# SOCIAL_AUTH_FACEBOOK_KEY = "1055318885807101"
+# SOCIAL_AUTH_FACEBOOK_SECRET = "6ca8584176a4f03cc7571d3c186c3e23"
 
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = "86ei7md1utizkz"
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = "WPL_AP1.dXWJkyGUEWwWUENo.q8WtWw=="
