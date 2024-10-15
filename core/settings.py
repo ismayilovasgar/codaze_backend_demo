@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-
+    
     # % <== Social Login ==>
     "django.contrib.sites",
     "allauth",
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "rest_framework.authtoken",
+    "social_django",
 ]
 
 # % <== Social Login ==>
@@ -66,6 +67,9 @@ SITE_ID = 1
 
 # % <== Social Login ==>
 AUTHENTICATION_BACKENDS = (
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.facebook.FacebookOAuth2",
+    "social_core.backends.linkedin.LinkedinOAuth2",
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
@@ -107,7 +111,9 @@ REST_USE_JWT = True
 # ACCOUNT_EMAIL_REQUIRED = True  # E-posta girmek zorunlu
 
 # % <== Social API Keys ==>
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ("60263067117-b1d5a6k7lb5aoplbura4vrog9hmeabma.apps.googleusercontent.com")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
+    "60263067117-b1d5a6k7lb5aoplbura4vrog9hmeabma.apps.googleusercontent.com"
+)
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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t"
 
 SOCIAL_AUTH_FACEBOOK_KEY = "1055318885807101"
@@ -132,7 +138,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
-    "ALGORITHM": "HS256", 
+    "ALGORITHM": "HS256",
     "VERIFYING_KEY": None,
     "AUDIENCE": None,
     "ISSUER": None,
@@ -161,7 +167,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # % <== Social Login ==>
-    "allauth.account.middleware.AccountMiddleware",  
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"

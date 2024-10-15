@@ -17,6 +17,7 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 
+
 # Login User
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -44,6 +45,8 @@ class LogoutView(APIView):
             return Response({"detail": "Logout successful."}, status=204)
         except Exception as e:
             return Response({"error": str(e)}, status=400)
+
+
 
 
 # class RegisterView(APIView):
